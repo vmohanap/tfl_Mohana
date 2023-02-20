@@ -36,10 +36,17 @@ namespace CSharpSelFramework.Pages
 
         public void ScrollToElemet(IWebElement webElement)
         {
-            var element = webElement;
-            Actions actions = new Actions(Driver);
-            actions.MoveToElement(element);
-            actions.Perform();
+            try
+            {
+                var element = webElement;
+                Actions actions = new Actions(Driver);
+                actions.MoveToElement(element);
+                actions.Perform();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in scrolling to the element: " + ex);
+            }
         }
 
         public void WaitUntilVisibleByXpath(string xpathValue)

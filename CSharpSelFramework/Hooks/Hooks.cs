@@ -52,20 +52,33 @@ namespace DemoPro.Hooks
         [BeforeScenario]
         public void BeforeScenario()
         {
-            Console.WriteLine("BeforeScenario");
-            scenario = featureName.CreateNode<Scenario>(ScenarioContext.Current.ScenarioInfo.Title);
-            ChromeOptions option = new ChromeOptions();
-            option.AddArguments("start-maximized");
-            option.AddArguments("--disable-gpu");
-            //option.AddArguments("--headless");
+            try
+            {
+                Console.WriteLine("BeforeScenario");
+                scenario = featureName.CreateNode<Scenario>(ScenarioContext.Current.ScenarioInfo.Title);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in fetching scenario: " + ex);
+            }
+            try
+            {
+                ChromeOptions option = new ChromeOptions();
+                option.AddArguments("start-maximized");
+                option.AddArguments("--disable-gpu");
+                //option.AddArguments("--headless");
 
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            Console.WriteLine("Setup");
-            _driverHelper.Driver = new ChromeDriver(option);
-            _driverHelper.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                new DriverManager().SetUpDriver(new ChromeConfig());
+                Console.WriteLine("Setup");
+                _driverHelper.Driver = new ChromeDriver(option);
+                _driverHelper.Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in launching driver: " + ex);
+            }
         }
-
-
         [AfterStep]
         public void InsertReportingSteps()
         {
