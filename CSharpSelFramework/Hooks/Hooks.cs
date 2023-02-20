@@ -30,17 +30,23 @@ namespace DemoPro.Hooks
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-
-            string workingDirectory = Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-            String reportPath = projectDirectory + "//index.html";
-            var htmlReporter = new ExtentHtmlReporter(reportPath);
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("Host Name", "Local host");
-            extent.AddSystemInfo("Environment", "QA");
-            extent.AddSystemInfo("Username", "Mohana");
-            extent.AttachReporter(htmlReporter);
+            try
+            {
+                string workingDirectory = Environment.CurrentDirectory;
+                string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+                String reportPath = projectDirectory + "//index.html";
+                var htmlReporter = new ExtentHtmlReporter(reportPath);
+                extent = new ExtentReports();
+                extent.AttachReporter(htmlReporter);
+                extent.AddSystemInfo("Host Name", "Local host");
+                extent.AddSystemInfo("Environment", "QA");
+                extent.AddSystemInfo("Username", "Mohana");
+                extent.AttachReporter(htmlReporter);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in creating report directory: " + ex);
+            }
         }
         [BeforeFeature]
         public static void BeforeFeature()
