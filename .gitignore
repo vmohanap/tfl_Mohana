@@ -61,3 +61,8 @@ bld/
 *.pidb
 *.svclog
 *.scc
+*.wsuo
+/CSharpSelFramework/.vs/CSharpSelFramework/v17/.suo
+/CSharpSelFramework/.vs/CSharpSelFramework/v17/TestStore/0/010.testlog
+/.vs/tfl_Mohana_poc/v17/TestStore/1/000.testlog
+/.vs/tfl_Mohana_poc/v17/TestStore/1/testlog.manifest
