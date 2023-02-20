@@ -16,7 +16,7 @@ using NUnit.Framework.Interfaces;
 namespace DemoPro.Hooks
 {
     [Binding]
-    public sealed class Hooks1
+    public sealed class Hooks
     {
         private static ExtentTest featureName;
         private static ExtentTest scenario;
@@ -25,7 +25,7 @@ namespace DemoPro.Hooks
         IWebDriver driver;
 
         private static DriverHelper _driverHelper;
-        public Hooks1(DriverHelper driverHelper) => _driverHelper = driverHelper;
+        public Hooks(DriverHelper driverHelper) => _driverHelper = driverHelper;
 
         [BeforeTestRun]
         public static void BeforeTestRun()
@@ -69,55 +69,71 @@ namespace DemoPro.Hooks
         [AfterStep]
         public void InsertReportingSteps()
         {
-            var stepType = ScenarioStepContext.Current.StepInfo.StepDefinitionType.ToString();
-            if (ScenarioContext.Current.TestError == null)
+            try
             {
-                if (stepType == "Given")
-                    scenario.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text);
-                else if (stepType == "When")
-                    scenario.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text);
-                else if (stepType == "Then")
-                    scenario.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text);
-                else if (stepType == "And")
-                    scenario.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text);
+                var stepType = ScenarioStepContext.Current.StepInfo.StepDefinitionType.ToString();
+                if (ScenarioContext.Current.TestError == null)
+                {
+                    if (stepType == "Given")
+                        scenario.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text);
+                    else if (stepType == "When")
+                        scenario.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text);
+                    else if (stepType == "Then")
+                        scenario.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text);
+                    else if (stepType == "And")
+                        scenario.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text);
+                }
+                else if (ScenarioContext.Current.TestError != null)
+                {
+                    if (stepType == "Given")
+                    {
+                        scenario.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
+                    }
+                    else if (stepType == "When")
+                    {
+                        scenario.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
+                    }
+                    else if (stepType == "Then")
+                    {
+                        scenario.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
+                    }
+                    else if (stepType == "And")
+                    {
+                        scenario.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
+                    }
+                }
             }
-            else if (ScenarioContext.Current.TestError != null)
+            catch (Exception ex)
             {
-                if (stepType == "Given")
-                {
-                    scenario.CreateNode<Given>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
-                }
-                else if (stepType == "When")
-                {
-                    scenario.CreateNode<When>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
-                }
-                else if (stepType == "Then")
-                {
-                    scenario.CreateNode<Then>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
-                }
-                else if (stepType == "And")
-                {
-                    scenario.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
-                }
+                Console.WriteLine("Exception in Inserting test reports: " + ex);
             }
         }
         [AfterScenario]
         public void AfterScenario()
         {
-            var status = TestContext.CurrentContext.Result.Outcome.Status;
-            var stackTrace = TestContext.CurrentContext.Result.StackTrace;
-
-            DateTime time = DateTime.Now;
-            String fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
-
-            if (status == TestStatus.Failed)
+            try
             {
+                var status = TestContext.CurrentContext.Result.Outcome.Status;
+                var stackTrace = TestContext.CurrentContext.Result.StackTrace;
 
-                _ = scenario.Fail("Test failed", captureScreenShot(driver, fileName));
-                scenario.Log(Status.Fail, "test failed with logtrace" + stackTrace);
+                DateTime time = DateTime.Now;
+                String fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
 
+                if (status == TestStatus.Failed)
+                {
+
+                    _ = scenario.Fail("Test failed", captureScreenShot(driver, fileName));
+                    scenario.Log(Status.Fail, "test failed with logtrace" + stackTrace);
+                }
             }
-            _driverHelper.Driver.Quit();
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in capturing the test status" + ex);
+            }
+            finally
+            {
+                _driverHelper.Driver.Quit();
+            }
         }
 
         [AfterTestRun]

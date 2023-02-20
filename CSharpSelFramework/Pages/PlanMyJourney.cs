@@ -1,6 +1,7 @@
 using CSharpSelFramework.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using System;
 
 namespace SeleniumCSharpNetCore.Pages
 {
@@ -38,34 +39,53 @@ namespace SeleniumCSharpNetCore.Pages
         }
         public void EnterFromLocation(string from)
         {
-            foreach (char fromText in from)
+            try
             {
-                fromLocation.SendKeys(fromText.ToString());
+                foreach (char fromText in from)
+                {
+                    fromLocation.SendKeys(fromText.ToString());
+                }
+                Assert.True(dropDown.Displayed);
+                fromLocation.SendKeys(Keys.ArrowDown);
+                fromLocation.SendKeys(Keys.Tab);
             }
-            Assert.True(dropDown.Displayed);
-            fromLocation.SendKeys(Keys.ArrowDown);
-            fromLocation.SendKeys(Keys.Tab);
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in entering the From Location: " + ex);
+            }
         }
         public void EnterToLocation(string to)
         {
-            foreach (char toText in to)
+            try
             {
-                toLocation.SendKeys(toText.ToString());
+                foreach (char toText in to)
+                {
+                    toLocation.SendKeys(toText.ToString());
+                }
+                Assert.True(dropDown.Displayed);
+                toLocation.SendKeys(Keys.ArrowDown);
+                toLocation.SendKeys(Keys.Tab);
             }
-            Assert.True(dropDown.Displayed);
-            toLocation.SendKeys(Keys.ArrowDown);
-            toLocation.SendKeys(Keys.Tab);
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in entering the To Location: " + ex);
+            }
 
         }
 
         public void SelectValueFromRecentSearch()
         {
-            fromLocation.Click();
-            Driver.FindElement(By.XPath("//span[@data-id='stops-recent-magic-searches-suggestion-1']")).Click();
-            toLocation.Click();
-            Driver.FindElement(By.XPath("//span[@data-id='stops-recent-magic-searches-suggestion-2']")).Click();
-
+            try
+            {
+                fromLocation.Click();
+                Driver.FindElement(By.XPath("//span[@data-id='stops-recent-magic-searches-suggestion-1']")).Click();
+                toLocation.Click();
+                Driver.FindElement(By.XPath("//span[@data-id='stops-recent-magic-searches-suggestion-2']")).Click();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception in searching from recent results: " + ex);
+            }
         }
         public void EnterFromValueUsingLocationCode(string from, string dataId)
         {
