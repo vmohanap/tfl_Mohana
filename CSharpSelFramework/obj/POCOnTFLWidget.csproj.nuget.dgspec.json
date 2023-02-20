@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\tfl_Mohana_poc\\CSharpSelFramework\\POCOnTFLWidget.csproj": {}
+    "C:\\Users\\user\\Source\\Repos\\tfl_Mohana_latest\\CSharpSelFramework\\POCOnTFLWidget.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\tfl_Mohana_poc\\CSharpSelFramework\\POCOnTFLWidget.csproj": {
+    "C:\\Users\\user\\Source\\Repos\\tfl_Mohana_latest\\CSharpSelFramework\\POCOnTFLWidget.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\tfl_Mohana_poc\\CSharpSelFramework\\POCOnTFLWidget.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Source\\Repos\\tfl_Mohana_latest\\CSharpSelFramework\\POCOnTFLWidget.csproj",
         "projectName": "POCOnTFLWidget",
-        "projectPath": "C:\\Users\\user\\source\\repos\\tfl_Mohana_poc\\CSharpSelFramework\\POCOnTFLWidget.csproj",
+        "projectPath": "C:\\Users\\user\\Source\\Repos\\tfl_Mohana_latest\\CSharpSelFramework\\POCOnTFLWidget.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\tfl_Mohana_poc\\CSharpSelFramework\\obj\\",
+        "outputPath": "C:\\Users\\user\\Source\\Repos\\tfl_Mohana_latest\\CSharpSelFramework\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
