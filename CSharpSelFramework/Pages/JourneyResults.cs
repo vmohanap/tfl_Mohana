@@ -26,7 +26,8 @@ namespace SeleniumCSharpNetCore.Pages
         IWebElement editToLocation => Driver.FindElement(By.CssSelector("input.jpTo"));
         IWebElement clearToLocation => Driver.FindElement(By.LinkText("Clear To location"));
         IWebElement updateJourney => Driver.FindElement(By.CssSelector("input.plan-journey-button"));
-
+        public void ClickEditJourney() => editJourney.Click();
+        public void ClickUpdateJourney() => updateJourney.Click();
         #endregion
 
         #region "Journey Results Text"
@@ -35,8 +36,7 @@ namespace SeleniumCSharpNetCore.Pages
         IReadOnlyCollection<IWebElement> journeyResults => Driver.FindElements(By.CssSelector("div.journey-result-summary strong"));
         public string validationError => Driver.FindElement(By.XPath("//li[@class='field-validation-error']")).Text;
         #endregion
-        public void ClickEditJourney() => editJourney.Click();
-        public void ClickUpdateJourney() => updateJourney.Click();
+
         public void CLickPlanAJourneyLink() => planAJourneyLink.Click();
 
         public void EditToLocation(string toLocation)
